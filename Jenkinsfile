@@ -44,7 +44,7 @@ pipeline {
 		        protocol: 'http',
 		        nexusUrl: '172.31.28.154:8081',
 		        groupId: 'projgrp',
-		        version: V$BUILD_ID-$BUILD_TIMESTAMP,
+		        version: V${env.BUILD_ID}-${env.BUILD_TIMESTAMP},
 		        repository: 'CICDtrivy-release',
 		        credentialsId: 'nexuslogin',
 		        artifacts: [
