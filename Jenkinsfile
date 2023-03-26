@@ -50,7 +50,7 @@ pipeline {
 		        artifacts: [
 		            [artifactId: 'CICDtrivy',
 		             classifier: '',
-		             file: '**/*.war',
+		             file: 'target/vprofile-v2.war',
 		             type: 'war']
 		        ]
      		)
