@@ -27,6 +27,7 @@ pipeline {
                 }
         }
       }
+
       stage("Quality Gate") {
             steps {
               timeout(time: 1, unit: 'HOURS') {
@@ -34,6 +35,27 @@ pipeline {
               }
             }
           }
+
+
+      stage("Uploading artifact to Nexus") {
+      	steps {
+      		nexusArtifactUploader(
+		        nexusVersion: 'nexus3',
+		        protocol: 'http',
+		        nexusUrl: '172.31.28.154:8081',
+		        groupId: 'projgrp',
+		        version: V$BUILD_ID-$BUILD_TIMESTAMP,
+		        repository: 'CICDtrivy-release',
+		        credentialsId: 'nexuslogin',
+		        artifacts: [
+		            [artifactId: CICDtrivy,
+		             classifier: '',
+		             file: '**/*.war',
+		             type: 'war']
+		        ]
+     		)
+      	}
+      }
 
 
 
