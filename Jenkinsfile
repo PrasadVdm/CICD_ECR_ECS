@@ -48,7 +48,7 @@ pipeline {
 		        repository: 'CICDtrivy-release',
 		        credentialsId: 'nexuslogin',
 		        artifacts: [
-		            [artifactId: CICDtrivy,
+		            [artifactId: 'CICDtrivy',
 		             classifier: '',
 		             file: '**/*.war',
 		             type: 'war']
@@ -67,3 +67,4 @@ pipeline {
 
     }
 }
+
