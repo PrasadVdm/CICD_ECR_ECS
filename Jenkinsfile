@@ -4,13 +4,18 @@ pipeline {
 	  jdk "OracleJDK8"
 
 	}
+  environment {
+    registryCredentials = 'ecr:us-east-1:aws-ecr-ecs-user'
+    ecrAppImage = '161589005609.dkr.ecr.us-east-1.amazonaws.com/vdm-ecr-ecs'
+    ecrRegistryURL = 'https://161589005609.dkr.ecr.us-east-1.amazonaws.com'
+  }
     agent any
 
     stages {
 
       stage ("Fetch Code") {
         steps {
-          git branch: "master", url: "https://github.com/PrasadVdm/CICD_Trivy.git"
+          git branch: "master", url: "https://github.com/PrasadVdm/CICD_ECR_ECS.git"
         }
       }
 
@@ -55,6 +60,26 @@ pipeline {
 		        ]
      		)
       	}
+      }
+
+      stage("Build Image") {
+        steps {
+          script {
+            dockerImage = docker.build( ecrAppImage + ":$BUILD_NUMBER", "./Dockerfile")
+          }
+
+        }
+      }
+
+      stage("Upload Image") {
+        steps {
+          script {
+            docker.withRegistry( ecrRegistryURL, registryCredentials ) {
+              dockerImage.push("$BUILD_NUMBER")
+              dockerImage.push('latest')
+            }
+          }
+        }
       }
 
 
