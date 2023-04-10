@@ -47,13 +47,13 @@ pipeline {
       		nexusArtifactUploader(
 		        nexusVersion: 'nexus3',
 		        protocol: 'http',
-		        nexusUrl: '172.31.28.154:8081',
+		        nexusUrl: '172.31.25.2:8081',
 		        groupId: 'projgrp',
 		        version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
-		        repository: 'CICDtrivy-release',
+		        repository: 'CICDEcrEcs',
 		        credentialsId: 'nexuslogin',
 		        artifacts: [
-		            [artifactId: 'CICDtrivy',
+		            [artifactId: 'ECRECS',
 		             classifier: '',
 		             file: 'target/vprofile-v2.war',
 		             type: 'war']
